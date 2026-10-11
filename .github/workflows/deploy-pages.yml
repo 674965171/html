@@ -25,20 +25,23 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: 检出仓库
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      # enablement: true —— 若仓库尚未启用 Pages，这一步会自动帮你启用
-      - name: 配置 Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      # ⚠️ 这里刻意不写 enablement: true。
+      # GitHub 出于安全考虑，已移除「创建 Pages 站点」的 REST API 端点，
+      # GitHub App / GITHUB_TOKEN 无权创建 Pages 站点，写了必然报
+      # "Resource not accessible by integration"。详见 actions/configure-pages#40。
+      # 因此首次必须在仓库 Settings → Pages 里手动把 Source 选为 "GitHub Actions"，
+      # 之后本步骤只需读取已有站点配置即可通过。
+      - name: 读取 Pages 配置
+        uses: actions/configure-pages@v6
 
       # 纯静态站点，无需构建；.git / .github 会被该 action 自动排除
       - name: 打包静态文件
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: '.'
 
       - name: 发布
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

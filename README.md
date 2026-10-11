@@ -96,19 +96,31 @@ npx serve .
 仓库自带 `.github/workflows/deploy-pages.yml`，推送到 `main` 即自动发布到
 <https://674965171.github.io/html/>。
 
-**首次启用前有一个前置条件**：GitHub Pages 在 **免费账号下只支持公开仓库**。
-如果仓库是私有的，工作流会因权限不足失败。处理方式二选一：
+### 首次启用：必须在 Settings 里手动点一次
 
-- **改公开**（免费）：`Settings → General → 拉到最底 Danger Zone → Change repository visibility → Public`。
-  改完在 `Actions` 页对失败的运行点一次 **Re-run all jobs** 即可。
-- **保持私有**：需升级 GitHub Pro。注意即使升级，**发布出来的站点本身仍是公开的**——
-  私有只保护源码，不保护页面。
+GitHub 出于安全考虑，**移除了「创建 Pages 站点」的 REST API 端点**，
+GitHub App / `GITHUB_TOKEN` 无权创建 Pages 站点。
+所以任何 `enablement: true` 的写法都会报
+`Resource not accessible by integration`（见 [actions/configure-pages#40](https://github.com/actions/configure-pages/issues/40)）。
 
-工作流里的 `configure-pages` 带 `enablement: true`，会自动帮你打开 Pages，
-不需要再手动去 Settings → Pages 选发布源。
+**这一步没有 API 可以替代，必须手动做一次：**
 
-> 备选方案：不用工作流，直接在 `Settings → Pages → Source: Deploy from a branch → main / (root)`。
-> 分支方式同样支持每次 push 自动重建。
+1. 打开 `Settings → Pages`（或直接访问 `/settings/pages`）
+2. **Build and deployment → Source** 选 **`GitHub Actions`**
+   （注意：**不要**选 `Deploy from a branch`，否则本工作流仍会失败）
+3. 回到 `Actions` 页，对失败的运行点 **Re-run all jobs**
+
+成功后工作流日志里会出现 `Environment URL: https://674965171.github.io/html/`。
+之后每次 `git push` 都会自动重新发布，不用再管。
+
+> 如果你更想走分支发布（不用 Actions），那就把 Source 选成
+> `Deploy from a branch → main → /(root)`，然后把 `.github/workflows/deploy-pages.yml` 删掉。
+> 分支方式同样支持每次 push 自动重建，两种方式**只能选一种**。
+
+### 关于仓库可见性
+
+GitHub Pages 在 **免费账号下只支持公开仓库**（官方文档原文），私有仓库需 Pro/Team/Enterprise。
+另外注意：**即使仓库是私有的，发布出来的站点本身也是公开的**——私有只保护源码，不保护页面。
 
 ---
 
