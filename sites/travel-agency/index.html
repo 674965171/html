@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>远行者旅行 · 精选线路商城</title>
+<meta name="description" content="远行者旅行：覆盖国内外的跟团游、自由行、亲子游线路，透明报价、行程可查、在线下单。">
+<link rel="stylesheet" href="../../assets/css/base.css">
+<style>
+/* ============ 远行者旅行 · 明亮旅行风（天空蓝 + 圆角卡片） ============ */
+:root{ --cy:#0891b2; --cy-d:#0e7490; --cy-l:#ecfeff; --sun:#f59e0b; }
+body{ background:#f7fafb; color:#0d1f2d; }
+
+/* 顶栏 */
+.hd{ position:sticky; top:0; z-index:70; background:rgba(255,255,255,.92); backdrop-filter:blur(14px); border-bottom:1px solid #e7eef1; }
+.hd__in{ height:66px; display:flex; align-items:center; gap:30px; }
+.lg{ display:flex; align-items:center; gap:10px; }
+.lg__m{ width:36px;height:36px;border-radius:11px; background:linear-gradient(150deg,#22d3ee,#0891b2); display:grid;place-items:center; font-size:18px; box-shadow:0 8px 18px -8px rgba(8,145,178,.85); }
+.lg__t{ font-size:16px; font-weight:820; letter-spacing:-.015em; }
+.lg__s{ font-size:9.5px; color:#8ba3b0; letter-spacing:.14em; }
+.hd__nav{ display:flex; gap:2px; }
+.hd__nav a{ padding:8px 14px; border-radius:9px; font-size:14px; font-weight:620; color:#41606f; transition:.2s; }
+.hd__nav a:hover,.hd__nav a.on{ background:var(--cy-l); color:var(--cy-d); }
+
+/* Hero */
+.hero{ position:relative; padding:70px 0 130px; background:linear-gradient(140deg,#0e7490,#0891b2 45%,#22d3ee); color:#fff; overflow:hidden; }
+.hero::before{ content:''; position:absolute; inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.18) 1.2px, transparent 1.2px); background-size:26px 26px;
+  mask-image:linear-gradient(to bottom,#000,transparent 80%); }
+.hero::after{ content:''; position:absolute; left:-120px; bottom:-200px; width:520px;height:520px; border-radius:50%; background:rgba(255,255,255,.09); }
+.hero__in{ position:relative; z-index:2; max-width:760px; }
+.hero h1{ font-size:clamp(28px,4vw,46px); font-weight:850; letter-spacing:-.03em; line-height:1.16; margin-bottom:16px; }
+.hero p{ color:#cffafe; font-size:15.5px; line-height:1.8; }
+
+/* 搜索条 */
+.sbar{ position:relative; z-index:5; margin-top:-58px; }
+.sbar__in{ background:#fff; border-radius:16px; box-shadow:0 22px 50px -24px rgba(13,31,45,.34); padding:12px; display:grid; grid-template-columns:1.4fr 1fr 1fr auto; gap:8px; align-items:center; }
+.sf{ padding:9px 15px; border-right:1px solid #eef3f5; }
+.sf:last-of-type{ border-right:0; }
+.sf label{ display:block; font-size:11px; font-weight:750; color:#9bb0bc; letter-spacing:.06em; margin-bottom:2px; }
+.sf input,.sf select{ width:100%; border:0; background:none; font-size:14.5px; font-weight:640; outline:none; padding:0; cursor:pointer; }
+.sbar__btn{ height:50px; padding:0 30px; border-radius:11px; background:var(--cy); color:#fff; font-size:15px; font-weight:750; display:flex; align-items:center; gap:8px; transition:.22s; }
+.sbar__btn:hover{ background:var(--cy-d); }
+
+/* 区块 */
+.sec{ padding:70px 0; }
+.sh{ display:flex; align-items:flex-end; gap:16px; margin-bottom:30px; flex-wrap:wrap; }
+.sh__t{ font-size:clamp(21px,2.4vw,28px); font-weight:820; letter-spacing:-.025em; }
+.sh__d{ font-size:13.5px; color:#7b93a0; padding-bottom:4px; }
+.sh__more{ margin-left:auto; font-size:13.5px; font-weight:700; color:var(--cy-d); }
+
+/* 目的地 */
+.dests{ display:grid; grid-template-columns:repeat(8,1fr); gap:14px; }
+.ds{ text-align:center; cursor:pointer; }
+.ds__c{ aspect-ratio:1; border-radius:50%; position:relative; overflow:hidden; box-shadow:0 10px 24px -12px rgba(13,31,45,.4); transition:.28s; }
+.ds:hover .ds__c{ transform:translateY(-5px) scale(1.03); }
+.ds__c::after{ content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(8,30,40,.55),transparent 62%); }
+.ds__c b{ position:absolute; left:0; right:0; bottom:11px; z-index:2; color:#fff; font-size:14px; font-weight:750; }
+.ds__n{ font-size:11.5px; color:#8ba3b0; margin-top:8px; }
+
+/* 线路卡 */
+.tabs{ display:flex; gap:6px; margin-bottom:22px; flex-wrap:wrap; }
+.tabs button{ padding:8px 18px; border-radius:999px; font-size:13.5px; font-weight:650; color:#55707d; background:#fff; border:1px solid #e3ecef; transition:.2s; }
+.tabs button.on{ background:var(--cy); border-color:var(--cy); color:#fff; box-shadow:0 8px 18px -10px rgba(8,145,178,.8); }
+
+.routes{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.rt{ background:#fff; border-radius:16px; overflow:hidden; border:1px solid #e9f0f2; transition:.26s; display:flex; flex-direction:column; }
+.rt:hover{ transform:translateY(-5px); box-shadow:0 24px 48px -24px rgba(13,31,45,.32); }
+.rt__img{ aspect-ratio:16/10; position:relative; }
+.rt__img::after{ content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(6,26,34,.62),transparent 58%); }
+.rt__days{ position:absolute; top:12px; left:12px; z-index:2; padding:4px 11px; border-radius:999px; background:rgba(255,255,255,.94); font-size:11.5px; font-weight:750; color:var(--cy-d); }
+.rt__fav{ position:absolute; top:10px; right:10px; z-index:2; width:30px;height:30px;border-radius:50%; background:rgba(255,255,255,.9); display:grid;place-items:center; font-size:14px; }
+.rt__title{ position:absolute; left:15px; right:15px; bottom:13px; z-index:2; color:#fff; font-size:16px; font-weight:760; line-height:1.35; }
+.rt__in{ padding:14px 16px 16px; display:flex; flex-direction:column; gap:9px; flex:1; }
+.rt__meta{ display:flex; gap:7px; flex-wrap:wrap; }
+.rt__meta span{ font-size:11.5px; font-weight:620; padding:2.5px 8px; border-radius:5px; background:#f1f7f9; color:#4f6b78; }
+.rt__meta span.hot{ background:#fff4e5; color:#b45309; }
+.rt__tags{ font-size:12.5px; color:#6d8894; }
+.rt__ft{ margin-top:auto; padding-top:13px; border-top:1px solid #f0f5f7; display:flex; align-items:baseline; gap:8px; }
+.rt__p b{ font-size:23px; font-weight:850; color:#e11d48; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+.rt__p b i{ font-size:14px; font-style:normal; }
+.rt__p span{ font-size:12px; color:#9bb0bc; }
+.rt__book{ margin-left:auto; padding:8px 16px; border-radius:9px; background:var(--cy-l); color:var(--cy-d); font-size:13px; font-weight:750; transition:.2s; }
+.rt__book:hover{ background:var(--cy); color:#fff; }
+
+/* 行程时间轴 */
+.tl-wrap{ background:linear-gradient(150deg,#0e7490,#0891b2); border-radius:20px; padding:40px; color:#fff; position:relative; overflow:hidden; }
+.tl-wrap::after{ content:''; position:absolute; right:-100px; top:-100px; width:380px;height:380px;border-radius:50%; background:rgba(255,255,255,.08); }
+.tl-h{ position:relative; margin-bottom:28px; }
+.tl-h h3{ font-size:24px; font-weight:820; letter-spacing:-.02em; }
+.tl-h p{ color:#cffafe; font-size:13.5px; margin-top:8px; }
+.tl{ position:relative; display:grid; grid-template-columns:repeat(5,1fr); gap:0; }
+.tl__i{ position:relative; padding-right:16px; }
+.tl__i::before{ content:''; position:absolute; top:9px; left:0; right:0; height:2px; background:rgba(255,255,255,.28); }
+.tl__i:last-child::before{ right:50%; }
+.tl__dot{ position:relative; width:18px;height:18px;border-radius:50%; background:#fff; box-shadow:0 0 0 4px rgba(255,255,255,.24); margin-bottom:16px; }
+.tl__d{ font-size:12px; font-weight:800; color:#67e8f9; letter-spacing:.06em; }
+.tl__t{ font-size:14.5px; font-weight:750; margin:5px 0 6px; }
+.tl__x{ font-size:12.5px; color:#cffafe; line-height:1.65; }
+.tl-ft{ margin-top:30px; padding-top:24px; border-top:1px solid rgba(255,255,255,.18); display:flex; align-items:center; gap:20px; flex-wrap:wrap; position:relative; }
+.tl-ft .p b{ font-size:30px; font-weight:850; letter-spacing:-.03em; }
+.tl-ft .p span{ font-size:13px; color:#cffafe; }
+.tl-ft .btn-w{ margin-left:auto; height:46px; padding:0 28px; border-radius:11px; background:#fff; color:var(--cy-d); font-size:15px; font-weight:750; display:inline-flex; align-items:center; }
+
+/* 服务保障 */
+.feat{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+.ft-i{ background:#fff; border:1px solid #e9f0f2; border-radius:14px; padding:24px 22px; }
+.ft-i__ic{ font-size:24px; margin-bottom:12px; }
+.ft-i h4{ font-size:15px; font-weight:740; margin-bottom:7px; }
+.ft-i p{ font-size:13px; color:#6d8894; line-height:1.7; }
+
+.ftr{ background:#0a1f2b; color:#8ba3b0; padding:48px 0 26px; font-size:13px; }
+.ftr__g{ display:grid; grid-template-columns:1.5fr repeat(3,1fr); gap:32px; }
+.ftr h5{ color:#fff; font-size:13.5px; margin-bottom:14px; }
+.ftr a{ display:block; color:#8ba3b0; padding:4px 0; }
+.ftr a:hover{ color:#67e8f9; }
+.ftr__bot{ margin-top:34px; padding-top:20px; border-top:1px solid rgba(255,255,255,.1); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:12px; }
+
+@media(max-width:1060px){
+  .dests{ grid-template-columns:repeat(4,1fr); }
+  .routes{ grid-template-columns:repeat(2,1fr); }
+  .tl{ grid-template-columns:1fr 1fr; gap:22px; }
+  .tl__i::before{ display:none; }
+  .feat{ grid-template-columns:1fr 1fr; }
+  .ftr__g{ grid-template-columns:1fr 1fr; }
+}
+@media(max-width:720px){
+  .sbar__in{ grid-template-columns:1fr; }
+  .sf{ border-right:0; border-bottom:1px solid #eef3f5; }
+  .sbar__btn{ width:100%; justify-content:center; }
+  .dests{ grid-template-columns:repeat(3,1fr); }
+  .routes{ grid-template-columns:1fr; }
+  .tl{ grid-template-columns:1fr; }
+  .feat{ grid-template-columns:1fr; }
+  .hd__nav{ display:none; }
+  .tl-wrap{ padding:26px 22px; }
+}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="wrap hd__in">
+    <div class="lg">
+      <div class="lg__m">✈️</div>
+      <div><div class="lg__t">远行者旅行</div><div class="lg__s">FARWALKER TRAVEL</div></div>
+    </div>
+    <nav class="hd__nav">
+      <a href="#" class="on">首页</a><a href="#routes">全部线路</a><a href="#">跟团游</a><a href="#">自由行</a><a href="#">签证</a><a href="#">企业团建</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="btn btn--ghost btn--sm" href="#">我的订单</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="wrap hero__in">
+    <h1>去一个真正想去的地方<br>而不是最便宜的地方</h1>
+    <p>我们只做一件事：把线路的每一天都写清楚。住哪、吃什么、走多少路、有没有购物店——下单前全部可查。</p>
+  </div>
+</section>
+
+<!-- 搜索 -->
+<div class="wrap sbar">
+  <div class="sbar__in">
+    <div class="sf"><label>目的地</label><input type="text" value="云南 · 大理" aria-label="目的地"></div>
+    <div class="sf"><label>出发时间</label><select aria-label="出发时间"><option>不限</option><option>本周内</option><option>本月内</option><option>下个月</option></select></div>
+    <div class="sf"><label>出行天数</label><select aria-label="出行天数"><option>不限</option><option>3-5 天</option><option>6-8 天</option><option>9 天以上</option></select></div>
+    <button class="sbar__btn">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:17px;height:17px"><circle cx="9" cy="9" r="5.5"/><path d="M13.5 13.5L17 17"/></svg>
+      搜索线路
+    </button>
+  </div>
+</div>
+
+<!-- 目的地 -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sh">
+      <h2 class="sh__t">热门目的地</h2>
+      <span class="sh__d">12 个直营地接城市，全线路自营不拼团</span>
+      <a class="sh__more" href="#">查看全部 68 个目的地 →</a>
+    </div>
+    <div class="dests">
+      <div class="ds"><div class="ds__c" style="background:linear-gradient(150deg,#38bdf8,#0369a1)"><b>大理</b></div><div class="ds__n">128 条线路</div></div>
+      <div class="ds"><div class="ds__c" style="background:linear-gradient(150deg,#fb923c,#c2410c)"><b>敦煌</b></div><div class="ds__n">46 条线路</div></div>
+      <div class="ds"><div class="ds__c" style="background:linear-gradient(150deg,#4ade80,#15803d)"><b>桂林</b></div><div class="ds__n">92 条线路</div></div>
+      <div class="ds"><div class="ds__c" style="background:linear-gradient(150deg,#a78bfa,#6d28d9)"><b>九寨</b></div><div class="ds__n">38 条线路</div></div>
+      <div class="ds"><div class="ds__c" style="background:linear-gradient(150deg,#22d3ee,#0e7490)"><b>三亚</b></div><div class="ds__n">156 条线路</div></div>
+      <div class="ds"><div class="ds__c" style="background:linear-gradient(150deg,#f472b6,#be185d)"><b>厦门</b></div><div class="ds__n">74 条线路</div></div>
+      <div class="ds"><div class="ds__c" style="background:linear-gradient(150deg,#facc15,#a16207)"><b>西安</b></div><div class="ds__n">88 条线路</div></div>
+      <div class="ds"><div class="ds__c" style="background:linear-gradient(150deg,#94a3b8,#334155)"><b>北海道</b></div><div class="ds__n">31 条线路</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 线路 -->
+<section class="sec" id="routes" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh">
+      <h2 class="sh__t">精选线路</h2>
+      <span class="sh__d">价格含机票 / 住宿 / 门票 / 用车，无隐形消费</span>
+    </div>
+
+    <div class="tabs">
+      <button class="on" data-cat="all">全部</button>
+      <button data-cat="group">跟团游</button>
+      <button data-cat="free">自由行</button>
+      <button data-cat="family">亲子游</button>
+      <button data-cat="custom">私家团</button>
+    </div>
+
+    <div class="routes" id="routeList"></div>
+  </div>
+</section>
+
+<!-- 行程时间轴 -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="tl-wrap">
+      <div class="tl-h">
+        <h3>以「大理 · 洱海环线 6 日」为例，看看我们怎么排行程</h3>
+        <p>每天的车程、景点、用餐、住宿标准都写在行程单里，出行前可逐条核对。</p>
+      </div>
+      <div class="tl">
+        <div class="tl__i"><div class="tl__dot"></div><div class="tl__d">DAY 1</div><div class="tl__t">抵达大理</div><div class="tl__x">专车接机 · 古城客栈入住 · 自由逛洋人街</div></div>
+        <div class="tl__i"><div class="tl__dot"></div><div class="tl__d">DAY 2</div><div class="tl__t">洱海西线</div><div class="tl__x">才村码头 · 海舌公园 · 喜洲古镇扎染体验</div></div>
+        <div class="tl__i"><div class="tl__dot"></div><div class="tl__d">DAY 3</div><div class="tl__t">洱海东线</div><div class="tl__x">双廊 · 挖色 · 环海骑行 18 km（可选电瓶车）</div></div>
+        <div class="tl__i"><div class="tl__dot"></div><div class="tl__d">DAY 4</div><div class="tl__t">苍山</div><div class="tl__x">感通索道 · 玉带云游路 · 天龙八部影视城</div></div>
+        <div class="tl__i"><div class="tl__dot"></div><div class="tl__d">DAY 5-6</div><div class="tl__t">沙溪古镇 + 返程</div><div class="tl__x">茶马古道遗迹 · 寺登街 · 送机</div></div>
+      </div>
+      <div class="tl-ft">
+        <div class="p"><b>¥3,680</b> <span>起 / 人（双人成行）</span></div>
+        <div style="font-size:13px;color:#cffafe">含 5 晚住宿 · 全程用车 · 门票 · 5 早 6 正</div>
+        <a class="btn-w" href="#">立即预订 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 保障 -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="feat">
+      <div class="ft-i"><div class="ft-i__ic">🏷️</div><h4>明码标价</h4><p>报价含哪些、不含哪些，逐项列清楚，绝无落地加价。</p></div>
+      <div class="ft-i"><div class="ft-i__ic">🚫</div><h4>无强制购物</h4><p>行程中不安排购物店，如遇违规全额退还团费。</p></div>
+      <div class="ft-i"><div class="ft-i__ic">👥</div><h4>小团出行</h4><p>跟团游最多 16 人，私家团 2 人即可成行。</p></div>
+      <div class="ft-i"><div class="ft-i__ic">🔄</div><h4>灵活退改</h4><p>出发前 7 天可免费改期，15 天可全额退款。</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__g">
+      <div>
+        <div class="lg" style="margin-bottom:14px">
+          <div class="lg__m">✈️</div>
+          <div><div class="lg__t" style="color:#fff">远行者旅行</div><div class="lg__s">FARWALKER TRAVEL</div></div>
+        </div>
+        <p style="max-width:280px;line-height:1.8">本页面为演示模板，所有线路、价格与机构信息均为虚构，不构成任何出行建议。</p>
+      </div>
+      <div><h5>热门目的地</h5><a href="#">大理</a><a href="#">三亚</a><a href="#">桂林</a><a href="#">敦煌</a></div>
+      <div><h5>产品类型</h5><a href="#routes">跟团游</a><a href="#routes">自由行</a><a href="#routes">亲子游</a><a href="#routes">私家团</a></div>
+      <div><h5>帮助</h5><a href="#">退改规则</a><a href="#">签证办理</a><a href="#">发票申请</a><a href="#">联系我们</a></div>
+    </div>
+    <div class="ftr__bot">
+      <span>© 2026 远行者国际旅行社（演示）</span>
+      <span>旅行社业务经营许可证：L-XXX-000000</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const ROUTES = [
+  { t:'大理洱海环线 6 日',      cat:'group',  days:'6 天 5 晚', price:3680, from:'大理', tags:['跟团游','小团','环海骑行'], hot:1, c:'#38bdf8,#0369a1', note:'专车接机 · 5 晚客栈 · 含门票' },
+  { t:'三亚海棠湾亲子 5 日',    cat:'family', days:'5 天 4 晚', price:5280, from:'三亚', tags:['亲子','海岛','含乐园门票'], hot:1, c:'#22d3ee,#0e7490', note:'亲子房 · 儿童餐 · 乐园两日票' },
+  { t:'桂林阳朔自由行 4 日',    cat:'free',   days:'4 天 3 晚', price:1980, from:'桂林', tags:['自由行','机酒套餐'], hot:0, c:'#4ade80,#15803d', note:'机票 + 酒店 + 接送，行程自定' },
+  { t:'敦煌莫高窟 5 日',        cat:'group',  days:'5 天 4 晚', price:4180, from:'敦煌', tags:['跟团游','人文','含莫高窟票'], hot:0, c:'#fb923c,#c2410c', note:'莫高窟 A 类票 · 鸣沙山 · 雅丹' },
+  { t:'九寨沟黄龙 4 日',        cat:'group',  days:'4 天 3 晚', price:2880, from:'成都', tags:['跟团游','自然风光'], hot:0, c:'#a78bfa,#6d28d9', note:'含景区门票 · 全程空调车' },
+  { t:'日本关西赏枫私家团 7 日', cat:'custom', days:'7 天 6 晚', price:12800, from:'大阪', tags:['私家团','2 人成行','含签证'], hot:1, c:'#f472b6,#be185d', note:'中文司导 · 4 星酒店 · 专车接送' },
+  { t:'厦门鼓浪屿自由行 3 日',  cat:'free',   days:'3 天 2 晚', price:1380, from:'厦门', tags:['自由行','周末游'], hot:0, c:'#94a3b8,#334155', note:'海景房 · 轮渡票代订' },
+  { t:'西安历史研学亲子 5 日',  cat:'family', days:'5 天 4 晚', price:4680, from:'西安', tags:['亲子','研学','讲解员'], hot:0, c:'#facc15,#a16207', note:'兵马俑专场讲解 · 手工体验课' },
+  { t:'川西小环线自驾 6 日',    cat:'custom', days:'6 天 5 晚', price:6880, from:'成都', tags:['私家团','越野车','摄影'], hot:0, c:'#0891b2,#155e75', note:'越野车 + 司导 · 含全程住宿' },
+];
+
+const $ = s => document.querySelector(s);
+let cat = 'all';
+
+function draw() {
+  const rows = ROUTES.filter(r => cat === 'all' || r.cat === cat);
+  $('#routeList').innerHTML = rows.map(r => `
+    <article class="rt">
+      <div class="rt__img" style="background:linear-gradient(140deg,${r.c})">
+        <span class="rt__days">${r.days}</span>
+        <span class="rt__fav">${r.hot ? '🔥' : '♡'}</span>
+        <div class="rt__title">${r.t}</div>
+      </div>
+      <div class="rt__in">
+        <div class="rt__meta">
+          <span>${r.from}出发</span>
+          ${r.hot ? '<span class="hot">本周热销</span>' : ''}
+        </div>
+        <div class="rt__tags">${r.tags.map(t => `#${t}`).join(' ')}</div>
+        <div style="font-size:12.5px;color:#8ba3b0">${r.note}</div>
+        <div class="rt__ft">
+          <div class="rt__p"><b><i>¥</i>${r.price.toLocaleString('zh-CN')}</b> <span>起 / 人</span></div>
+          <a class="rt__book" href="#">立即预订</a>
+        </div>
+      </div>
+    </article>`).join('') ||
+    `<p style="grid-column:1/-1;text-align:center;color:#8ba3b0;padding:60px 0">该分类暂无线路</p>`;
+}
+
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
+  cat = b.dataset.cat;
+  draw();
+}));
+
+draw();
+</script>
+</body>
+</html>

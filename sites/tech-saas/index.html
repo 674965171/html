@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>云枢 CloudHub · 一站式研发协作平台</title>
+<meta name="description" content="云枢 CloudHub：代码托管、CI/CD、项目管理、可观测性一体化研发协作平台，支持私有化部署。">
+<link rel="stylesheet" href="../../assets/css/base.css">
+<style>
+/* ============ 云枢 CloudHub · 现代 SaaS 风（深色 Hero + 靛蓝） ============ */
+:root{ --iv:#4f46e5; --iv-2:#6366f1; --iv-3:#818cf8; --ink:#0b1020; --ink-2:#141a33; }
+body{ background:#fff; color:#0f172a; }
+
+/* 顶栏（浮在深色 hero 上） */
+.hd{ position:absolute; top:0; left:0; right:0; z-index:60; }
+.hd__in{ height:72px; display:flex; align-items:center; gap:32px; }
+.lg{ display:flex; align-items:center; gap:10px; }
+.lg__m{ width:34px;height:34px;border-radius:10px; background:linear-gradient(150deg,#818cf8,#4f46e5); display:grid;place-items:center; box-shadow:0 0 24px -4px rgba(99,102,241,.9); }
+.lg__m svg{ width:18px;height:18px;color:#fff; }
+.lg__t{ font-size:16px; font-weight:800; color:#fff; letter-spacing:-.015em; }
+.hd__nav{ display:flex; gap:2px; }
+.hd__nav a{ padding:8px 14px; border-radius:8px; font-size:14px; font-weight:600; color:#a5aecb; transition:.2s; }
+.hd__nav a:hover{ color:#fff; background:rgba(255,255,255,.07); }
+.hd__cta{ margin-left:auto; display:flex; align-items:center; gap:10px; }
+.hd__cta a{ font-size:14px; font-weight:650; color:#c7cee4; padding:8px 14px; }
+.hd__cta a:hover{ color:#fff; }
+.bt{ display:inline-flex; align-items:center; gap:8px; height:42px; padding:0 22px; border-radius:9px; font-size:14px; font-weight:700; transition:.22s; }
+.bt--iv{ background:var(--iv); color:#fff; box-shadow:0 10px 26px -10px rgba(79,70,229,.9); }
+.bt--iv:hover{ background:#4338ca; transform:translateY(-1px); }
+.bt--g{ border:1px solid rgba(255,255,255,.18); color:#fff; }
+.bt--g:hover{ background:rgba(255,255,255,.08); }
+
+/* Hero */
+.hero{ position:relative; background:var(--ink); color:#fff; padding:150px 0 0; overflow:hidden; }
+.hero::before{ content:''; position:absolute; top:-260px; left:50%; transform:translateX(-50%); width:1100px; height:760px;
+  background:radial-gradient(ellipse at center, rgba(79,70,229,.42), rgba(79,70,229,.1) 42%, transparent 68%); }
+.hero::after{ content:''; position:absolute; inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:64px 64px; mask-image:radial-gradient(70% 60% at 50% 20%,#000,transparent); }
+.hero__in{ position:relative; z-index:2; text-align:center; max-width:820px; margin-inline:auto; }
+.pill{ display:inline-flex; align-items:center; gap:9px; padding:6px 8px 6px 6px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); font-size:12.5px; color:#c7cee4; margin-bottom:26px; }
+.pill b{ padding:3px 10px; border-radius:999px; background:var(--iv); color:#fff; font-size:11px; font-weight:750; }
+.hero h1{ font-size:clamp(32px,5.2vw,60px); font-weight:860; letter-spacing:-.038em; line-height:1.1; margin-bottom:22px; }
+.hero h1 em{ font-style:normal; background:linear-gradient(100deg,#818cf8,#c7d2fe 50%,#a5b4fc); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.hero p{ color:#a5aecb; font-size:17px; line-height:1.85; max-width:620px; margin-inline:auto; }
+.hero__btns{ display:flex; gap:12px; justify-content:center; margin-top:34px; flex-wrap:wrap; }
+.hero__meta{ margin-top:18px; font-size:12.5px; color:#6f7a9e; }
+
+/* 产品截图 */
+.shot{ position:relative; z-index:3; margin-top:64px; border-radius:16px 16px 0 0; overflow:hidden;
+  border:1px solid rgba(255,255,255,.12); border-bottom:0; background:#0e1430; box-shadow:0 -20px 80px -20px rgba(79,70,229,.6); }
+.shot__bar{ height:40px; display:flex; align-items:center; gap:6px; padding:0 14px; background:#141a33; border-bottom:1px solid rgba(255,255,255,.08); }
+.shot__bar i{ width:9px;height:9px;border-radius:50%; background:#2a3358; }
+.shot__bar i:nth-child(1){ background:#ef4444aa; } .shot__bar i:nth-child(2){ background:#f59e0baa; } .shot__bar i:nth-child(3){ background:#22c55eaa; }
+.shot__url{ margin-left:14px; flex:1; max-width:280px; height:22px; border-radius:6px; background:#0b1020; display:flex; align-items:center; padding:0 10px; font-size:11px; color:#5a6690; font-family:var(--f-mono); }
+.shot__body{ display:grid; grid-template-columns:186px 1fr; min-height:330px; }
+.shot__side{ background:#0c1230; border-right:1px solid rgba(255,255,255,.06); padding:16px 12px; }
+.snav{ display:flex; align-items:center; gap:9px; padding:8px 10px; border-radius:7px; font-size:12.5px; color:#8b95bb; margin-bottom:2px; }
+.snav.on{ background:rgba(99,102,241,.16); color:#c7d2fe; }
+.snav b{ width:14px;height:14px;border-radius:4px; background:currentColor; opacity:.55; }
+.shot__main{ padding:20px; }
+.kpi{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:18px; }
+.kp{ background:#141a33; border:1px solid rgba(255,255,255,.07); border-radius:10px; padding:13px 15px; }
+.kp small{ font-size:10.5px; color:#6f7a9e; letter-spacing:.06em; }
+.kp b{ display:block; font-size:21px; font-weight:820; margin-top:5px; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+.kp b span{ font-size:11px; color:#22c55e; font-weight:700; margin-left:5px; }
+.chart{ background:#141a33; border:1px solid rgba(255,255,255,.07); border-radius:10px; padding:16px; }
+.chart__h{ font-size:12px; color:#8b95bb; margin-bottom:16px; }
+.bars{ display:flex; align-items:flex-end; gap:8px; height:110px; }
+.bars i{ flex:1; border-radius:4px 4px 0 0; background:linear-gradient(to top,#4f46e5,#818cf8); opacity:.85; }
+
+/* 客户条 */
+.logos{ background:#0b1020; padding:34px 0 40px; }
+.logos__in{ display:flex; align-items:center; justify-content:center; gap:44px; flex-wrap:wrap; }
+.logos__in span{ font-size:15px; font-weight:750; color:#3d4766; letter-spacing:.04em; }
+
+/* 区块 */
+.sec{ padding:92px 0; }
+.sec--g{ background:#f7f8fc; }
+.sh{ text-align:center; max-width:660px; margin:0 auto 52px; }
+.sh__e{ font-size:12.5px; font-weight:800; color:var(--iv); letter-spacing:.16em; text-transform:uppercase; }
+.sh__t{ font-size:clamp(25px,3.1vw,38px); font-weight:840; letter-spacing:-.03em; margin-top:12px; line-height:1.25; }
+.sh__d{ color:#5b6785; margin-top:14px; font-size:15.5px; line-height:1.8; }
+
+/* 功能 */
+.feats{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.fs{ border:1px solid #e8eaf2; border-radius:15px; padding:28px 26px; background:#fff; transition:.26s; }
+.fs:hover{ border-color:#c7cbf0; box-shadow:0 22px 44px -24px rgba(15,23,42,.28); transform:translateY(-4px); }
+.fs__ic{ width:42px;height:42px;border-radius:11px; background:#eef0ff; display:grid;place-items:center; font-size:20px; margin-bottom:16px; }
+.fs h3{ font-size:16.5px; font-weight:760; margin-bottom:8px; }
+.fs p{ font-size:13.8px; color:#5b6785; line-height:1.78; }
+
+/* 产品视图切换 */
+.views{ background:var(--ink); border-radius:22px; padding:46px; color:#fff; overflow:hidden; }
+.views__tabs{ display:flex; gap:6px; margin-bottom:30px; flex-wrap:wrap; }
+.views__tabs button{ padding:9px 18px; border-radius:9px; font-size:13.5px; font-weight:650; color:#8b95bb; border:1px solid rgba(255,255,255,.1); transition:.2s; }
+.views__tabs button.on{ background:var(--iv); border-color:var(--iv); color:#fff; }
+.views__bd{ display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center; }
+.views__bd h3{ font-size:26px; font-weight:830; letter-spacing:-.028em; margin-bottom:14px; }
+.views__bd p{ color:#a5aecb; font-size:14.5px; line-height:1.9; }
+.views__bd ul{ margin-top:20px; display:flex; flex-direction:column; gap:11px; }
+.views__bd li{ display:flex; gap:10px; font-size:14px; color:#c7cee4; }
+.views__bd li::before{ content:'✓'; color:#818cf8; font-weight:800; }
+.vmock{ border-radius:14px; border:1px solid rgba(255,255,255,.1); background:#0e1430; overflow:hidden; }
+.vmock__h{ padding:13px 16px; border-bottom:1px solid rgba(255,255,255,.07); font-size:12px; color:#8b95bb; font-family:var(--f-mono); }
+.vmock__b{ padding:16px; display:flex; flex-direction:column; gap:9px; }
+.vrow{ display:flex; align-items:center; gap:11px; padding:11px 13px; border-radius:9px; background:#141a33; font-size:12.5px; color:#a5aecb; }
+.vrow b{ width:8px;height:8px;border-radius:50%; background:#22c55e; flex:none; }
+.vrow .sp{ flex:1 }
+.vrow em{ font-style:normal; font-family:var(--f-mono); font-size:11.5px; color:#6f7a9e; }
+.vrow .ok{ color:#22c55e; font-weight:700; } .vrow .run{ color:#f59e0b; font-weight:700; }
+
+/* 定价 */
+.plans{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; align-items:start; }
+.pl{ border:1px solid #e8eaf2; border-radius:18px; padding:32px 28px; background:#fff; transition:.26s; position:relative; }
+.pl--hot{ border-color:var(--iv); box-shadow:0 26px 56px -28px rgba(79,70,229,.5); }
+.pl__flag{ position:absolute; top:-11px; left:50%; transform:translateX(-50%); padding:4px 14px; border-radius:999px; background:var(--iv); color:#fff; font-size:11.5px; font-weight:750; }
+.pl__n{ font-size:16px; font-weight:780; }
+.pl__d{ font-size:13px; color:#7c88a6; margin-top:6px; min-height:38px; }
+.pl__p{ display:flex; align-items:baseline; gap:5px; margin:18px 0 6px; }
+.pl__p b{ font-size:40px; font-weight:860; letter-spacing:-.04em; font-variant-numeric:tabular-nums; }
+.pl__p i{ font-size:16px; font-style:normal; font-weight:700; }
+.pl__p span{ font-size:13px; color:#7c88a6; }
+.pl__save{ font-size:12px; color:var(--iv); font-weight:700; min-height:18px; }
+.pl ul{ margin:20px 0 24px; display:flex; flex-direction:column; gap:11px; }
+.pl li{ display:flex; gap:10px; font-size:13.8px; color:#41506e; }
+.pl li::before{ content:'✓'; color:var(--iv); font-weight:800; }
+.pl li.off{ color:#b3bccd; } .pl li.off::before{ content:'—'; color:#cbd2e0; }
+.pl .bt{ width:100%; justify-content:center; }
+
+/* FAQ */
+.faq{ max-width:820px; margin-inline:auto; display:flex; flex-direction:column; gap:12px; }
+.fq{ border:1px solid #e8eaf2; border-radius:13px; background:#fff; overflow:hidden; }
+.fq__q{ width:100%; display:flex; align-items:center; gap:14px; padding:19px 22px; font-size:15px; font-weight:680; text-align:left; transition:.2s; }
+.fq__q:hover{ background:#fafbff; }
+.fq__q i{ margin-left:auto; font-style:normal; color:#9aa5bd; transition:.26s; flex:none; font-size:18px; }
+.fq.on .fq__q i{ transform:rotate(45deg); color:var(--iv); }
+.fq__a{ max-height:0; overflow:hidden; transition:max-height .3s var(--ease); }
+.fq__a p{ padding:0 22px 20px; font-size:14px; color:#5b6785; line-height:1.85; }
+
+/* CTA */
+.cta{ background:linear-gradient(130deg,#0b1020,#1e1b4b 55%,#312e81); border-radius:24px; padding:64px 56px; text-align:center; color:#fff; position:relative; overflow:hidden; }
+.cta::after{ content:''; position:absolute; left:50%; bottom:-160px; transform:translateX(-50%); width:600px;height:400px; border-radius:50%; background:radial-gradient(circle,rgba(99,102,241,.5),transparent 65%); }
+.cta h2{ font-size:clamp(24px,3.2vw,38px); font-weight:850; letter-spacing:-.032em; position:relative; }
+.cta p{ color:#a5aecb; margin-top:14px; font-size:15.5px; position:relative; }
+.cta__btns{ display:flex; gap:12px; justify-content:center; margin-top:32px; flex-wrap:wrap; position:relative; }
+
+/* 页脚 */
+.ft{ background:var(--ink); color:#7c88a6; padding:56px 0 28px; font-size:13px; }
+.ft__g{ display:grid; grid-template-columns:1.7fr repeat(3,1fr); gap:36px; }
+.ft h5{ color:#fff; font-size:13.5px; margin-bottom:14px; }
+.ft a{ display:block; padding:4px 0; color:#7c88a6; transition:.2s; }
+.ft a:hover{ color:#a5b4fc; }
+.ft__bot{ margin-top:38px; padding-top:20px; border-top:1px solid rgba(255,255,255,.08); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:12px; }
+
+@media(max-width:1000px){
+  .feats,.plans{ grid-template-columns:1fr 1fr; }
+  .pl--hot{ grid-row:1; }
+  .views__bd{ grid-template-columns:1fr; gap:28px; }
+  .shot__body{ grid-template-columns:1fr; }
+  .shot__side{ display:none; }
+  .kpi{ grid-template-columns:1fr 1fr; }
+  .ft__g{ grid-template-columns:1fr 1fr; }
+  .hd__nav{ display:none; }
+  .views{ padding:30px 24px; }
+}
+@media(max-width:680px){
+  .feats,.plans{ grid-template-columns:1fr; }
+  .hero{ padding-top:120px; }
+  .cta{ padding:40px 26px; }
+  .sec{ padding:64px 0; }
+}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="wrap hd__in">
+    <div class="lg">
+      <div class="lg__m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16a5 5 0 010-10 6.5 6.5 0 0112.5 2A4 4 0 0118 16H6z"/></svg></div>
+      <div class="lg__t">云枢 CloudHub</div>
+    </div>
+    <nav class="hd__nav">
+      <a href="#feats">功能</a><a href="#views">产品</a><a href="#plans">定价</a><a href="#faq">常见问题</a><a href="#">文档</a>
+    </nav>
+    <div class="hd__cta">
+      <a href="#">登录</a>
+      <a class="bt bt--iv" href="#plans">免费试用</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="wrap hero__in">
+    <span class="pill"><b>NEW</b> v4.2 已发布 · 新增流水线缓存与审计日志</span>
+    <h1>让研发团队的<br>每一次交付都<em>可追溯</em></h1>
+    <p>代码托管、CI/CD、项目管理、可观测性收进一个平台。少一次工具切换，就多一次按时上线。</p>
+    <div class="hero__btns">
+      <a class="bt bt--iv" href="#plans">免费试用 14 天 →</a>
+      <a class="bt bt--g" href="#views">看看产品长什么样</a>
+    </div>
+    <div class="hero__meta">无需信用卡 · 支持私有化部署 · 数据可导出</div>
+
+    <!-- 产品截图 -->
+    <div class="shot">
+      <div class="shot__bar">
+        <i></i><i></i><i></i>
+        <span class="shot__url">app.cloudhub.example/overview</span>
+      </div>
+      <div class="shot__body">
+        <aside class="shot__side">
+          <div class="snav on"><b></b>总览</div>
+          <div class="snav"><b></b>代码仓库</div>
+          <div class="snav"><b></b>流水线</div>
+          <div class="snav"><b></b>需求看板</div>
+          <div class="snav"><b></b>制品库</div>
+          <div class="snav"><b></b>监控告警</div>
+          <div class="snav"><b></b>成员权限</div>
+        </aside>
+        <div class="shot__main">
+          <div class="kpi">
+            <div class="kp"><small>今日构建</small><b>1,284<span>+12%</span></b></div>
+            <div class="kp"><small>构建成功率</small><b>98.6<span>%</span></b></div>
+            <div class="kp"><small>平均耗时</small><b>2.4<span>min</span></b></div>
+            <div class="kp"><small>部署次数</small><b>46<span>次</span></b></div>
+          </div>
+          <div class="chart">
+            <div class="chart__h">近 14 天构建趋势</div>
+            <div class="bars">
+              <i style="height:42%"></i><i style="height:58%"></i><i style="height:36%"></i><i style="height:71%"></i>
+              <i style="height:52%"></i><i style="height:84%"></i><i style="height:63%"></i><i style="height:47%"></i>
+              <i style="height:92%"></i><i style="height:68%"></i><i style="height:55%"></i><i style="height:78%"></i>
+              <i style="height:88%"></i><i style="height:96%"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="logos">
+  <div class="wrap logos__in">
+    <span>被 2,400+ 研发团队使用</span>
+    <span>恒生科技</span><span>远见软件</span><span>星链数据</span><span>云图智能</span><span>中科智造</span>
+  </div>
+</div>
+
+<!-- 功能 -->
+<section class="sec" id="feats">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh__e">Capabilities</div>
+      <h2 class="sh__t">把散落在 8 个工具里的流程，收进 1 个平台</h2>
+      <p class="sh__d">不用再在代码、CI、看板、监控之间来回跳。一个账号，一条链路，从需求到上线全程留痕。</p>
+    </div>
+    <div class="feats">
+      <div class="fs"><div class="fs__ic">📦</div><h3>代码托管</h3><p>内置 Git 仓库、代码评审、分支保护与合并门禁，支持大仓与 LFS。</p></div>
+      <div class="fs"><div class="fs__ic">⚡</div><h3>流水线 CI/CD</h3><p>声明式流水线、依赖缓存、并行 Job，分钟级从提交跑到灰度发布。</p></div>
+      <div class="fs"><div class="fs__ic">🗂️</div><h3>需求与看板</h3><p>需求、迭代、任务、缺陷同源管理，代码提交可自动关联需求编号。</p></div>
+      <div class="fs"><div class="fs__ic">📊</div><h3>可观测性</h3><p>日志、指标、链路追踪三合一，异常自动定位到具体提交与责任人。</p></div>
+      <div class="fs"><div class="fs__ic">🔐</div><h3>权限与审计</h3><p>基于角色的细粒度权限，全量操作审计日志，支持对接企业 SSO。</p></div>
+      <div class="fs"><div class="fs__ic">🏢</div><h3>私有化部署</h3><p>支持内网离线安装与国产化信创环境，数据完全留在你自己的机房。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 产品视图 -->
+<section class="sec sec--g" id="views">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh__e">Product Tour</div>
+      <h2 class="sh__t">切换看看每个模块</h2>
+    </div>
+    <div class="views">
+      <div class="views__tabs">
+        <button class="on" data-v="ci">流水线</button>
+        <button data-v="board">需求看板</button>
+        <button data-v="obs">监控告警</button>
+      </div>
+      <div class="views__bd">
+        <div>
+          <h3 id="vTitle">流水线：从提交到灰度，一条链路跑完</h3>
+          <p id="vDesc">提交代码后自动触发构建、单测、镜像打包与部署。任一环节失败即时通知，日志按步骤折叠，定位问题不用翻几百行输出。</p>
+          <ul id="vList">
+            <li>依赖缓存命中率 90%+，平均构建 2.4 分钟</li>
+            <li>支持并行 Job 与失败自动重试</li>
+            <li>发布策略支持蓝绿、金丝雀、分批灰度</li>
+          </ul>
+        </div>
+        <div class="vmock">
+          <div class="vmock__h" id="vMockH">pipeline #1284 · main</div>
+          <div class="vmock__b" id="vMockB"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 定价 -->
+<section class="sec" id="plans">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh__e">Pricing</div>
+      <h2 class="sh__t">按团队规模选，随时可升降级</h2>
+      <p class="sh__d">所有套餐均包含无限仓库与无限成员。年付立省两个月。</p>
+    </div>
+    <div style="display:flex;justify-content:center;margin-bottom:30px">
+      <div class="sorts" style="display:flex;gap:4px;background:#f1f3fa;padding:4px;border-radius:10px">
+        <button class="on" data-cycle="m" style="padding:8px 20px;border-radius:8px;font-size:13.5px;font-weight:650;background:#fff;color:var(--iv);box-shadow:0 1px 3px rgba(15,23,42,.1)">按月付</button>
+        <button data-cycle="y" style="padding:8px 20px;border-radius:8px;font-size:13.5px;font-weight:650;color:#7c88a6">按年付 · 省 2 个月</button>
+      </div>
+    </div>
+
+    <div class="plans">
+      <div class="pl">
+        <div class="pl__n">团队版</div>
+        <div class="pl__d">适合 20 人以内的小团队起步使用</div>
+        <div class="pl__p"><i>¥</i><b data-m="99" data-y="82">99</b><span>/ 人 / 月</span></div>
+        <div class="pl__save" data-m="" data-y="年付立省 ¥204 / 人"></div>
+        <ul>
+          <li>无限代码仓库与成员</li>
+          <li>每月 5,000 分钟构建时长</li>
+          <li>7 天日志留存</li>
+          <li>社区支持</li>
+          <li class="off">SSO 单点登录</li>
+          <li class="off">私有化部署</li>
+        </ul>
+        <a class="bt bt--g" href="#" style="border-color:#e8eaf2;color:#0f172a">开始试用</a>
+      </div>
+
+      <div class="pl pl--hot">
+        <div class="pl__flag">最受欢迎</div>
+        <div class="pl__n">专业版</div>
+        <div class="pl__d">适合有交付节奏要求的成长型研发团队</div>
+        <div class="pl__p"><i>¥</i><b data-m="199" data-y="166">199</b><span>/ 人 / 月</span></div>
+        <div class="pl__save" data-m="" data-y="年付立省 ¥396 / 人"></div>
+        <ul>
+          <li>包含团队版全部能力</li>
+          <li>每月 30,000 分钟构建时长</li>
+          <li>90 天日志留存</li>
+          <li>SSO 单点登录与审计日志</li>
+          <li>工作日 8 小时工单支持</li>
+          <li class="off">私有化部署</li>
+        </ul>
+        <a class="bt bt--iv" href="#">免费试用 14 天</a>
+      </div>
+
+      <div class="pl">
+        <div class="pl__n">企业版</div>
+        <div class="pl__d">适合对合规、安全与自主可控有要求的组织</div>
+        <div class="pl__p"><i>¥</i><b data-m="399" data-y="332">399</b><span>/ 人 / 月</span></div>
+        <div class="pl__save" data-m="" data-y="年付立省 ¥804 / 人"></div>
+        <ul>
+          <li>包含专业版全部能力</li>
+          <li>不限构建时长</li>
+          <li>日志永久留存</li>
+          <li>私有化 / 信创环境部署</li>
+          <li>专属客户成功经理</li>
+          <li>7×24 小时技术支持</li>
+        </ul>
+        <a class="bt bt--g" href="#" style="border-color:#e8eaf2;color:#0f172a">联系我们</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec sec--g" id="faq">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh__e">FAQ</div>
+      <h2 class="sh__t">常见问题</h2>
+    </div>
+    <div class="faq">
+      <div class="fq"><button class="fq__q">试用期结束后数据会丢吗？<i>＋</i></button><div class="fq__a"><p>不会。试用期结束后仓库与数据会保留 90 天，期间随时可以补差价转为正式套餐，数据无缝衔接。</p></div></div>
+      <div class="fq"><button class="fq__q">支持从其他平台迁移吗？<i>＋</i></button><div class="fq__a"><p>支持。我们提供一键导入工具，可迁移 Git 仓库、Issue、PR 历史与成员权限，迁移过程不影响原平台使用。</p></div></div>
+      <div class="fq"><button class="fq__q">构建时长怎么算？<i>＋</i></button><div class="fq__a"><p>按实际执行分钟数计算，同一账号下的并行 Job 分别计时。排队等待时间不计入，缓存命中的依赖下载也不计入。</p></div></div>
+      <div class="fq"><button class="fq__q">私有化部署需要什么环境？<i>＋</i></button><div class="fq__a"><p>支持主流 Linux 发行版与国产化信创环境（麒麟、统信等），最低 8 核 32G 单机即可起步，也支持 K8s 集群部署。</p></div></div>
+      <div class="fq"><button class="fq__q">可以只买某几个模块吗？<i>＋</i></button><div class="fq__a"><p>可以。企业版支持模块化采购，比如只购买代码托管 + 流水线，或只购买监控告警，具体请联系销售定制方案。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta">
+      <h2>先跑通一条流水线，再决定要不要买</h2>
+      <p>14 天免费试用，无需信用卡，5 分钟接入你的第一个仓库。</p>
+      <div class="cta__btns">
+        <a class="bt bt--iv" href="#">免费开始 →</a>
+        <a class="bt bt--g" href="#">预约产品演示</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft__g">
+      <div>
+        <div class="lg" style="margin-bottom:14px">
+          <div class="lg__m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16a5 5 0 010-10 6.5 6.5 0 0112.5 2A4 4 0 0118 16H6z"/></svg></div>
+          <div class="lg__t">云枢 CloudHub</div>
+        </div>
+        <p style="max-width:300px;line-height:1.85">本页面为演示模板，所有产品能力、价格与客户名称均为虚构，不构成任何商业要约。</p>
+      </div>
+      <div><h5>产品</h5><a href="#feats">代码托管</a><a href="#feats">流水线</a><a href="#feats">需求看板</a><a href="#feats">监控告警</a></div>
+      <div><h5>开发者</h5><a href="#">API 文档</a><a href="#">SDK 下载</a><a href="#">状态页</a><a href="#">更新日志</a></div>
+      <div><h5>公司</h5><a href="#">关于我们</a><a href="#">加入我们</a><a href="#">安全合规</a><a href="#">联系我们</a></div>
+    </div>
+    <div class="ft__bot">
+      <span>© 2026 云枢科技有限公司（演示）</span>
+      <span>某ICP备00000000号</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- 产品视图切换 ---------- */
+const VIEWS = {
+  ci: {
+    title:'流水线：从提交到灰度，一条链路跑完',
+    desc:'提交代码后自动触发构建、单测、镜像打包与部署。任一环节失败即时通知，日志按步骤折叠，定位问题不用翻几百行输出。',
+    list:['依赖缓存命中率 90%+，平均构建 2.4 分钟','支持并行 Job 与失败自动重试','发布策略支持蓝绿、金丝雀、分批灰度'],
+    mockH:'pipeline #1284 · main',
+    rows:[
+      ['检出代码','12s','ok'],['安装依赖（缓存命中）','21s','ok'],['单元测试 428 项','1m04s','ok'],
+      ['构建镜像','38s','ok'],['部署到预发环境','—','run'],['灰度发布 10% 流量','—',''],
+    ],
+  },
+  board: {
+    title:'需求看板：代码提交自动关联需求',
+    desc:'需求、任务、缺陷在同一块看板上流转。提交信息里带上需求编号，看板会自动更新状态，不用再手动同步进度。',
+    list:['支持 Scrum 迭代与看板两种模式','燃尽图、累计流图自动生成','提交 / PR 自动关联需求编号'],
+    mockH:'迭代 24 · 进行中',
+    rows:[
+      ['【需求 #318】支持多环境配置','@林清野','ok'],['【缺陷 #204】登录超时未提示','@周叙','ok'],
+      ['【需求 #322】看板筛选器优化','@陈默','run'],['【任务 #329】补充 API 文档','@未指派',''],
+      ['【需求 #331】审计日志导出','@林清野',''],
+    ],
+  },
+  obs: {
+    title:'监控告警：异常直接定位到那次提交',
+    desc:'日志、指标、链路三合一。指标异常时自动关联时间窗口内的发布记录，把「哪次上线引起的」直接摆在你面前。',
+    list:['指标异常自动关联发布记录','日志全文检索，支持结构化字段过滤','告警支持钉钉 / 企微 / 短信 / Webhook'],
+    mockH:'service: order-api · 近 1 小时',
+    rows:[
+      ['P99 响应时间 820ms（阈值 800ms）','告警','run'],['错误率 0.42%（阈值 0.5%）','正常','ok'],
+      ['关联发布：v2.14.3 · 18 分钟前','@周叙',''],['下游依赖 payment-svc 超时 3 次','注意',''],
+    ],
+  },
+};
+
+const $ = s => document.querySelector(s);
+const cls = t => t === 'ok' ? 'ok' : t === 'run' ? 'run' : '';
+
+function drawView(k) {
+  const v = VIEWS[k];
+  $('#vTitle').textContent = v.title;
+  $('#vDesc').textContent = v.desc;
+  $('#vList').innerHTML = v.list.map(x => `<li>${x}</li>`).join('');
+  $('#vMockH').textContent = v.mockH;
+  $('#vMockB').innerHTML = v.rows.map(r => `
+    <div class="vrow"><b></b><span class="sp">${r[0]}</span>
+      <em>${r[1]}</em>
+      ${r[2] ? `<span class="${cls(r[2])}">${r[2] === 'ok' ? '完成' : '进行中'}</span>` : ''}
+    </div>`).join('');
+}
+
+document.querySelectorAll('.views__tabs button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.views__tabs button').forEach(x => x.classList.toggle('on', x === b));
+  drawView(b.dataset.v);
+}));
+
+/* ---------- 定价切换 ---------- */
+document.querySelectorAll('[data-cycle]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('[data-cycle]').forEach(x => {
+    const on = x === b;
+    x.classList.toggle('on', on);
+    x.style.background = on ? '#fff' : 'transparent';
+    x.style.color = on ? 'var(--iv)' : '#7c88a6';
+    x.style.boxShadow = on ? '0 1px 3px rgba(15,23,42,.1)' : 'none';
+  });
+  const y = b.dataset.cycle === 'y';
+  document.querySelectorAll('.pl__p b').forEach(el => {
+    el.textContent = y ? el.dataset.y : el.dataset.m;
+  });
+  document.querySelectorAll('.pl__save').forEach(el => {
+    el.textContent = y ? el.dataset.y : el.dataset.m;
+  });
+}));
+
+/* ---------- FAQ ---------- */
+document.querySelectorAll('.fq__q').forEach(q => q.addEventListener('click', () => {
+  const fq = q.parentElement;
+  const a = fq.querySelector('.fq__a');
+  const open = fq.classList.contains('on');
+
+  document.querySelectorAll('.fq').forEach(x => {
+    x.classList.remove('on');
+    x.querySelector('.fq__a').style.maxHeight = '0px';
+  });
+
+  if (!open) {
+    fq.classList.add('on');
+    a.style.maxHeight = a.scrollHeight + 'px';
+  }
+}));
+
+drawView('ci');
+</script>
+</body>
+</html>

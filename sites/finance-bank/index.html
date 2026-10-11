@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>汇通银行 · 数字金融与财富管理</title>
+<meta name="description" content="汇通银行官网：个人金融、企业金融、财富管理三大业务板块，支持利率速查、存款测算与网点查询。">
+<link rel="stylesheet" href="../../assets/css/base.css">
+<style>
+/* ============ 汇通银行 · 稳重金融风（白 + 深蓝） ============ */
+:root{ --nv:#0f2a5e; --nv-2:#1d4ed8; --nv-3:#3b82f6; --nv-l:#eff4ff; --gold:#b8860b; }
+body{ background:#fff; color:#0d1b33; }
+
+/* 顶部工具条 */
+.util{ background:var(--nv); color:#a8bde0; font-size:12.5px; }
+.util__in{ height:34px; display:flex; align-items:center; gap:20px; }
+.util a{ color:#a8bde0; transition:.2s; }
+.util a:hover{ color:#fff; }
+.util__seg{ display:flex; gap:2px; background:rgba(255,255,255,.1); padding:2px; border-radius:6px; }
+.util__seg b{ padding:3px 11px; border-radius:4px; font-weight:650; cursor:pointer; transition:.2s; }
+.util__seg b.on{ background:#fff; color:var(--nv); }
+
+/* 主顶栏 */
+.hd{ background:#fff; border-bottom:1px solid #e6ebf3; position:sticky; top:0; z-index:70; }
+.hd__in{ height:68px; display:flex; align-items:center; gap:34px; }
+.lg{ display:flex; align-items:center; gap:11px; }
+.lg__m{ width:36px;height:36px;border-radius:8px; background:linear-gradient(150deg,var(--nv-2),var(--nv)); display:grid;place-items:center; color:#fff; font-size:16px; font-weight:900; box-shadow:0 6px 16px -8px rgba(29,78,216,.8); }
+.lg__t{ font-size:16.5px; font-weight:820; letter-spacing:-.015em; color:var(--nv); }
+.lg__s{ font-size:9.5px; color:#8ea3c4; letter-spacing:.16em; }
+.hd__nav{ display:flex; gap:3px; }
+.hd__nav a{ padding:9px 15px; border-radius:8px; font-size:14.5px; font-weight:650; color:#3c4f70; transition:.2s; }
+.hd__nav a:hover,.hd__nav a.on{ background:var(--nv-l); color:var(--nv-2); }
+
+/* Hero */
+.hero{ background:linear-gradient(135deg,#0b2149,#0f2a5e 42%,#1d4ed8); color:#fff; padding:66px 0 0; position:relative; overflow:hidden; }
+.hero::after{ content:''; position:absolute; right:-160px; top:-180px; width:640px;height:640px; border-radius:50%; background:radial-gradient(circle,rgba(59,130,246,.35),transparent 62%); }
+.hero__in{ position:relative; z-index:2; display:grid; grid-template-columns:1.1fr .9fr; gap:52px; align-items:center; padding-bottom:64px; }
+.hero .tag{ display:inline-block; padding:5px 12px; border-radius:6px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); font-size:12px; font-weight:650; letter-spacing:.04em; margin-bottom:20px; }
+.hero h1{ font-size:clamp(28px,3.7vw,44px); font-weight:850; letter-spacing:-.03em; line-height:1.2; margin-bottom:18px; }
+.hero h1 em{ font-style:normal; color:#93c5fd; }
+.hero p{ color:#b9cbe8; font-size:15.5px; line-height:1.85; max-width:480px; }
+.hero__btns{ display:flex; gap:12px; margin-top:30px; flex-wrap:wrap; }
+.bt{ display:inline-flex; align-items:center; gap:8px; height:46px; padding:0 24px; border-radius:9px; font-size:14.5px; font-weight:700; transition:.22s; }
+.bt--w{ background:#fff; color:var(--nv); }
+.bt--w:hover{ background:#e8f0ff; transform:translateY(-2px); }
+.bt--g{ border:1px solid rgba(255,255,255,.28); color:#fff; }
+.bt--g:hover{ background:rgba(255,255,255,.1); }
+
+/* 主推产品卡 */
+.pcard{ background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); border-radius:18px; padding:24px; backdrop-filter:blur(8px); }
+.pcard__h{ font-size:12px; font-weight:700; color:#93c5fd; letter-spacing:.14em; margin-bottom:16px; }
+.prow{ display:flex; align-items:center; justify-content:space-between; padding:13px 0; border-bottom:1px solid rgba(255,255,255,.12); }
+.prow:last-child{ border-bottom:0; }
+.prow__n{ font-size:14px; font-weight:600; color:#dbe7fb; }
+.prow__v{ font-size:22px; font-weight:850; color:#fff; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+.prow__v small{ font-size:13px; font-weight:700; color:#93c5fd; margin-left:2px; }
+
+/* 快捷入口条 */
+.quick{ position:relative; z-index:3; margin-top:-34px; }
+.quick__in{ background:#fff; border-radius:14px; box-shadow:0 18px 44px -22px rgba(13,27,51,.32); display:grid; grid-template-columns:repeat(6,1fr); overflow:hidden; }
+.qi{ padding:22px 14px; text-align:center; border-left:1px solid #eef2f8; transition:.22s; cursor:pointer; }
+.qi:first-child{ border-left:0; }
+.qi:hover{ background:var(--nv-l); }
+.qi__ic{ font-size:23px; margin-bottom:9px; }
+.qi__t{ font-size:13.5px; font-weight:680; }
+.qi__s{ font-size:11.5px; color:#8ea3c4; margin-top:2px; }
+
+/* 区块 */
+.sec{ padding:82px 0; }
+.sec--g{ background:#f6f8fc; }
+.sh{ margin-bottom:42px; }
+.sh__e{ font-size:12px; font-weight:800; color:var(--nv-2); letter-spacing:.16em; text-transform:uppercase; }
+.sh__t{ font-size:clamp(23px,2.5vw,32px); font-weight:820; letter-spacing:-.025em; margin-top:10px; color:var(--nv); }
+.sh__d{ color:#5a6b85; margin-top:11px; font-size:14.5px; max-width:620px; }
+
+/* 业务矩阵 */
+.biz{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.bz{ border:1px solid #e6ebf3; border-radius:14px; padding:28px 24px; transition:.26s; }
+.bz:hover{ border-color:#c9d8f0; box-shadow:0 20px 40px -22px rgba(13,27,51,.28); transform:translateY(-4px); }
+.bz__ic{ width:44px;height:44px;border-radius:11px; background:var(--nv-l); display:grid;place-items:center; font-size:21px; margin-bottom:16px; }
+.bz h3{ font-size:17px; font-weight:750; margin-bottom:8px; color:var(--nv); }
+.bz p{ font-size:13.5px; color:#5a6b85; line-height:1.75; }
+.bz__ls{ margin-top:15px; display:flex; flex-wrap:wrap; gap:6px; }
+.bz__ls span{ font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:5px; background:#f2f5fa; color:#4b5d7a; }
+
+/* 利率 + 计算器 */
+.tool{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.pane{ background:#fff; border:1px solid #e6ebf3; border-radius:16px; padding:28px; }
+.pane h3{ font-size:17px; font-weight:750; color:var(--nv); margin-bottom:6px; }
+.pane > p{ font-size:13px; color:#7c8ba3; margin-bottom:20px; }
+.tabs{ display:flex; gap:4px; background:#f2f5fa; padding:3px; border-radius:9px; margin-bottom:18px; }
+.tabs button{ flex:1; padding:8px; border-radius:7px; font-size:13px; font-weight:650; color:#66779a; transition:.2s; }
+.tabs button.on{ background:#fff; color:var(--nv-2); box-shadow:0 1px 3px rgba(13,27,51,.1); }
+.rt{ width:100%; border-collapse:collapse; font-size:13.5px; }
+.rt th{ text-align:left; font-size:11.5px; font-weight:750; color:#8ea3c4; letter-spacing:.06em; padding:0 0 11px; border-bottom:1px solid #eef2f8; }
+.rt td{ padding:12px 0; border-bottom:1px solid #f4f7fb; color:#3c4f70; }
+.rt tr:last-child td{ border-bottom:0; }
+.rt td:last-child{ text-align:right; font-weight:800; color:var(--nv-2); font-variant-numeric:tabular-nums; }
+
+.cr{ margin-bottom:20px; }
+.cr label{ display:flex; justify-content:space-between; font-size:13.5px; font-weight:600; color:#3c4f70; margin-bottom:9px; }
+.cr label b{ color:var(--nv-2); font-variant-numeric:tabular-nums; }
+.cr input[type=range]{ width:100%; accent-color:var(--nv-2); }
+.cout{ background:linear-gradient(150deg,#0f2a5e,#1d4ed8); border-radius:13px; padding:22px; color:#fff; }
+.cout small{ font-size:12.5px; color:#b9cbe8; }
+.cout b{ display:block; font-size:32px; font-weight:850; letter-spacing:-.035em; margin-top:5px; font-variant-numeric:tabular-nums; }
+.cout__sub{ display:flex; gap:22px; margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.16); font-size:12.5px; color:#b9cbe8; }
+.cout__sub b{ font-size:15px; display:inline; margin-left:4px; }
+
+/* 网点条 */
+.branch{ background:var(--nv); color:#fff; border-radius:18px; padding:34px 38px; display:flex; align-items:center; gap:26px; flex-wrap:wrap; }
+.branch h3{ font-size:22px; font-weight:800; letter-spacing:-.02em; }
+.branch p{ color:#a8bde0; font-size:13.5px; margin-top:6px; }
+.branch__box{ margin-left:auto; display:flex; background:rgba(255,255,255,.1); border-radius:10px; overflow:hidden; }
+.branch__box input{ background:none; border:0; padding:0 16px; color:#fff; font-size:14px; width:190px; outline:none; }
+.branch__box input::placeholder{ color:#8ea3c4; }
+.branch__box button{ padding:0 20px; height:44px; background:#fff; color:var(--nv); font-weight:750; font-size:14px; }
+
+.ft{ background:#0b1c3a; color:#8ea3c4; padding:52px 0 28px; font-size:13px; }
+.ft__g{ display:grid; grid-template-columns:1.6fr repeat(3,1fr); gap:34px; }
+.ft h5{ color:#fff; font-size:13.5px; font-weight:700; margin-bottom:14px; }
+.ft a{ display:block; color:#8ea3c4; padding:4px 0; transition:.2s; }
+.ft a:hover{ color:#fff; }
+.ft__bot{ margin-top:38px; padding-top:20px; border-top:1px solid rgba(255,255,255,.1); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:12px; }
+
+@media(max-width:1000px){
+  .hero__in{ grid-template-columns:1fr; gap:32px; }
+  .quick__in{ grid-template-columns:repeat(3,1fr); }
+  .qi:nth-child(4){ border-left:0; }
+  .biz,.tool{ grid-template-columns:1fr; }
+  .ft__g{ grid-template-columns:1fr 1fr; }
+  .hd__nav{ display:none; }
+  .branch__box{ margin-left:0; width:100%; }
+  .branch__box input{ flex:1; width:auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- 工具条 -->
+<div class="util">
+  <div class="wrap util__in">
+    <div class="util__seg"><b class="on">个人客户</b><b>企业客户</b></div>
+    <div class="spacer"></div>
+    <a href="#">网点查询</a><a href="#">客服热线 95500</a><a href="#">EN</a>
+  </div>
+</div>
+
+<!-- 主顶栏 -->
+<header class="hd">
+  <div class="wrap hd__in">
+    <div class="lg">
+      <div class="lg__m">汇</div>
+      <div><div class="lg__t">汇通银行</div><div class="lg__s">HUITONG BANK</div></div>
+    </div>
+    <nav class="hd__nav">
+      <a href="#" class="on">个人金融</a><a href="#">企业金融</a><a href="#">财富管理</a><a href="#">信用卡</a><a href="#tool">利率查询</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="btn btn--accent btn--sm" href="#">个人网银登录</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="wrap hero__in">
+    <div>
+      <span class="tag">国家金融监督管理总局批准设立 · 主体信用评级 AAA</span>
+      <h1>让每一笔资金<br>都流向<em>更有价值的地方</em></h1>
+      <p>汇通银行深耕零售与公司金融 30 年，服务个人客户 2,100 万、企业客户 18 万家，以数字化能力重构金融服务的每一环。</p>
+      <div class="hero__btns">
+        <a class="bt bt--w" href="#tool">测算我的存款收益</a>
+        <a class="bt bt--g" href="#biz">查看业务矩阵</a>
+      </div>
+    </div>
+    <aside class="pcard">
+      <div class="pcard__h">TODAY'S RATES · 今日挂牌</div>
+      <div class="prow"><span class="prow__n">活期存款</span><span class="prow__v">0.20<small>%</small></span></div>
+      <div class="prow"><span class="prow__n">一年期定期</span><span class="prow__v">1.45<small>%</small></span></div>
+      <div class="prow"><span class="prow__n">三年期定期</span><span class="prow__v">1.95<small>%</small></span></div>
+      <div class="prow"><span class="prow__n">首套房贷利率</span><span class="prow__v">3.85<small>%</small></span></div>
+    </aside>
+  </div>
+</section>
+
+<!-- 快捷入口 -->
+<div class="quick">
+  <div class="wrap quick__in">
+    <div class="qi"><div class="qi__ic">💳</div><div class="qi__t">信用卡申请</div><div class="qi__s">最快 3 分钟</div></div>
+    <div class="qi"><div class="qi__ic">🏦</div><div class="qi__t">存款产品</div><div class="qi__s">多档期限可选</div></div>
+    <div class="qi"><div class="qi__ic">📈</div><div class="qi__t">理财产品</div><div class="qi__s">稳健 / 进取</div></div>
+    <div class="qi"><div class="qi__ic">🏠</div><div class="qi__t">贷款申请</div><div class="qi__s">在线预审批</div></div>
+    <div class="qi"><div class="qi__ic">🌏</div><div class="qi__t">跨境汇款</div><div class="qi__s">支持 26 个币种</div></div>
+    <div class="qi"><div class="qi__ic">📱</div><div class="qi__t">手机银行</div><div class="qi__s">扫码下载</div></div>
+  </div>
+</div>
+
+<!-- 业务矩阵 -->
+<section class="sec" id="biz">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh__e">Business Matrix</div>
+      <h2 class="sh__t">三大业务板块</h2>
+      <p class="sh__d">个人、企业、财富管理三线并行，覆盖从日常结算到资产配置的完整金融需求。</p>
+    </div>
+    <div class="biz">
+      <div class="bz"><div class="bz__ic">👤</div><h3>个人金融</h3><p>储蓄存款、个人贷款、信用卡、支付结算，覆盖个人全生命周期金融需求。</p><div class="bz__ls"><span>储蓄</span><span>房贷</span><span>信用卡</span><span>消费贷</span></div></div>
+      <div class="bz"><div class="bz__ic">🏢</div><h3>企业金融</h3><p>流动资金贷款、项目融资、票据业务、现金管理，为中小微企业提供一站式方案。</p><div class="bz__ls"><span>流贷</span><span>票据</span><span>现金管理</span><span>供应链</span></div></div>
+      <div class="bz"><div class="bz__ic">💎</div><h3>财富管理</h3><p>基于风险测评的资产配置建议，覆盖公募基金、理财、保险、贵金属等品类。</p><div class="bz__ls"><span>资产配置</span><span>基金</span><span>保险</span><span>贵金属</span></div></div>
+      <div class="bz"><div class="bz__ic">🔐</div><h3>数字安全</h3><p>国密算法加密、设备指纹、实时风控引擎，交易全链路可追溯。</p><div class="bz__ls"><span>国密</span><span>风控</span><span>生物识别</span></div></div>
+      <div class="bz"><div class="bz__ic">🌐</div><h3>跨境金融</h3><p>跨境结算、结售汇、贸易融资，支持 26 个币种、覆盖 80+ 国家和地区。</p><div class="bz__ls"><span>跨境汇款</span><span>结售汇</span><span>贸易融资</span></div></div>
+      <div class="bz"><div class="bz__ic">🤝</div><h3>普惠金融</h3><p>面向小微、涉农、个体工商户的专属信贷产品，线上申请、快速审批。</p><div class="bz__ls"><span>小微贷</span><span>涉农贷</span><span>创业贷</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 利率 + 计算器 -->
+<section class="sec sec--g" id="tool">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh__e">Rate &amp; Calculator</div>
+      <h2 class="sh__t">利率速查与收益测算</h2>
+      <p class="sh__d">实时挂牌利率一览，拖动滑块即可测算存款到期收益与贷款月供。</p>
+    </div>
+
+    <div class="tool">
+      <!-- 利率表 -->
+      <div class="pane">
+        <h3>挂牌利率速查</h3>
+        <p>数据更新于今日 09:00，仅供参考</p>
+        <div class="tabs">
+          <button class="on" data-tab="dep">存款利率</button>
+          <button data-tab="loan">贷款利率</button>
+        </div>
+        <table class="rt" id="rateTable"></table>
+      </div>
+
+      <!-- 计算器 -->
+      <div class="pane">
+        <h3>存款收益测算</h3>
+        <p>等额本息 / 到期一次性还本付息</p>
+        <div class="cr">
+          <label>存款本金 <b id="vAmt">10 万</b></label>
+          <input type="range" id="rAmt" min="1" max="200" step="1" value="10">
+        </div>
+        <div class="cr">
+          <label>存款期限 <b id="vTerm">3 年</b></label>
+          <input type="range" id="rTerm" min="1" max="5" step="1" value="3">
+        </div>
+        <div class="cout">
+          <small>到期本息合计</small>
+          <b id="outTotal">—</b>
+          <div class="cout__sub">
+            <span>利息收入 <b id="outInt">—</b></span>
+            <span>年化利率 <b id="outRate">—</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 网点 -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="branch">
+      <div>
+        <h3>查找离你最近的网点</h3>
+        <p>全国 1,260 家营业网点、4,800 台自助设备</p>
+      </div>
+      <div class="branch__box">
+        <input type="text" placeholder="输入城市或地区名称">
+        <button>查询</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft__g">
+      <div>
+        <div class="lg" style="margin-bottom:14px">
+          <div class="lg__m">汇</div>
+          <div><div class="lg__t" style="color:#fff">汇通银行</div><div class="lg__s">HUITONG BANK</div></div>
+        </div>
+        <p style="max-width:290px;line-height:1.8">本页面为演示模板，所有利率、产品、机构信息均为虚构，不构成任何投资建议。</p>
+      </div>
+      <div><h5>个人金融</h5><a href="#">储蓄存款</a><a href="#">个人贷款</a><a href="#">信用卡</a><a href="#">支付结算</a></div>
+      <div><h5>企业金融</h5><a href="#">流动资金贷款</a><a href="#">票据业务</a><a href="#">现金管理</a><a href="#">供应链金融</a></div>
+      <div><h5>帮助中心</h5><a href="#tool">利率查询</a><a href="#">费率标准</a><a href="#">投诉建议</a><a href="#">安全须知</a></div>
+    </div>
+    <div class="ft__bot">
+      <span>© 2026 汇通银行股份有限公司（演示）</span>
+      <span>某ICP备00000000号 · 本页面不构成投资建议</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- 利率表 ---------- */
+const RATES = {
+  dep: [
+    ['活期存款', '0.20%'],
+    ['三个月定期', '1.10%'],
+    ['半年定期', '1.30%'],
+    ['一年期定期', '1.45%'],
+    ['三年期定期', '1.95%'],
+    ['五年期定期', '2.00%'],
+  ],
+  loan: [
+    ['首套住房贷款（LPR-20BP）', '3.85%'],
+    ['二套住房贷款（LPR+20BP）', '4.25%'],
+    ['个人消费贷款（1 年以内）', '3.65%'],
+    ['个人经营贷款（1-5 年）', '3.95%'],
+    ['小微企业流动资金贷款', '4.10%'],
+    ['票据贴现（6 个月）', '2.80%'],
+  ],
+};
+
+const $ = s => document.querySelector(s);
+let curTab = 'dep';
+
+function drawRate() {
+  const rows = RATES[curTab];
+  $('#rateTable').innerHTML =
+    `<thead><tr><th>产品 / 期限</th><th style="text-align:right">年化利率</th></tr></thead><tbody>` +
+    rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('') +
+    `</tbody>`;
+}
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
+  curTab = b.dataset.tab;
+  drawRate();
+  calc();
+}));
+
+/* ---------- 计算器 ---------- */
+const TERM_RATE = { 1: 1.45, 2: 1.65, 3: 1.95, 4: 1.98, 5: 2.00 };
+const fmt = n => n.toLocaleString('zh-CN', { maximumFractionDigits: 2 });
+
+function calc() {
+  const amt = +$('#rAmt').value;          // 万
+  const term = +$('#rTerm').value;        // 年
+  const rate = TERM_RATE[term];
+
+  $('#vAmt').textContent = amt + ' 万';
+  $('#vTerm').textContent = term + ' 年';
+
+  const principal = amt * 10000;
+  const interest = principal * (rate / 100) * term;
+  $('#outTotal').textContent = fmt(principal + interest) + ' 元';
+  $('#outInt').textContent = fmt(interest) + ' 元';
+  $('#outRate').textContent = rate.toFixed(2) + '%';
+}
+
+['rAmt', 'rTerm'].forEach(id => document.getElementById(id).addEventListener('input', calc));
+
+drawRate();
+calc();
+</script>
+</body>
+</html>

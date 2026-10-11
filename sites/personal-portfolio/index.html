@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>林清野 · 产品设计师 / 作品集</title>
+<meta name="description" content="林清野，产品设计师。作品集、经历与联系方式。">
+<link rel="stylesheet" href="../../assets/css/base.css">
+<style>
+/* ============ 林清野 · 极简编辑风（大留白 + 细线 + 大字号） ============ */
+:root{ --line:#e4e4e7; --ink:#09090b; --ink-2:#52525b; --ink-3:#a1a1aa; }
+body{ background:#fff; color:var(--ink); font-size:16px; }
+
+.wrap{ width:min(100% - 56px, 1100px); margin-inline:auto; }
+
+/* 顶栏 */
+.hd{ position:sticky; top:0; z-index:60; background:rgba(255,255,255,.86); backdrop-filter:blur(14px); border-bottom:1px solid var(--line); }
+.hd__in{ height:64px; display:flex; align-items:center; }
+.mark{ font-size:15px; font-weight:800; letter-spacing:-.02em; }
+.mark span{ color:var(--ink-3); font-weight:500; margin-left:7px; }
+.hd__nav{ margin-left:auto; display:flex; gap:26px; }
+.hd__nav a{ font-size:13px; font-weight:600; color:var(--ink-2); letter-spacing:.02em; transition:.2s; }
+.hd__nav a:hover{ color:var(--ink); }
+
+/* Hero */
+.hero{ padding:104px 0 76px; }
+.avail{ display:inline-flex; align-items:center; gap:8px; font-size:12.5px; font-weight:600; color:var(--ink-2); padding:5px 12px; border:1px solid var(--line); border-radius:999px; margin-bottom:36px; }
+.avail i{ width:7px;height:7px;border-radius:50%; background:#22c55e; box-shadow:0 0 0 3px #dcfce7; }
+.hero h1{ font-size:clamp(38px,7vw,84px); line-height:1.02; letter-spacing:-.045em; font-weight:860; margin-bottom:30px; }
+.hero h1 em{ font-style:normal; color:var(--ink-3); }
+.hero__lead{ font-size:clamp(17px,2vw,21px); line-height:1.65; color:var(--ink-2); max-width:640px; font-weight:450; }
+.hero__meta{ display:flex; gap:44px; margin-top:52px; padding-top:26px; border-top:1px solid var(--line); flex-wrap:wrap; }
+.mt small{ display:block; font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; color:var(--ink-3); text-transform:uppercase; margin-bottom:7px; }
+.mt b{ font-size:15px; font-weight:650; }
+
+/* 区块通用 */
+.sec{ padding:82px 0; border-top:1px solid var(--line); }
+.sh{ display:flex; align-items:baseline; gap:16px; margin-bottom:42px; }
+.sh__no{ font-family:var(--f-mono); font-size:12px; color:var(--ink-3); letter-spacing:.1em; }
+.sh__t{ font-size:clamp(22px,2.8vw,30px); font-weight:820; letter-spacing:-.03em; }
+.sh__d{ margin-left:auto; font-size:13.5px; color:var(--ink-3); }
+
+/* 作品 */
+.works{ display:grid; grid-template-columns:repeat(2,1fr); gap:26px; }
+.wk{ display:block; }
+.wk__c{ aspect-ratio:4/3; border-radius:12px; overflow:hidden; position:relative; background:#f4f4f5; }
+.wk__c > div{ position:absolute; inset:0; transition:transform .5s var(--ease); }
+.wk:hover .wk__c > div{ transform:scale(1.035); }
+.wk__tag{ position:absolute; top:14px; left:14px; z-index:2; font-family:var(--f-mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; padding:4px 10px; border-radius:5px; background:rgba(255,255,255,.92); color:var(--ink); }
+.wk__in{ padding:17px 2px 0; display:flex; align-items:baseline; gap:14px; }
+.wk__n{ font-family:var(--f-mono); font-size:12px; color:var(--ink-3); }
+.wk__t{ font-size:17.5px; font-weight:750; letter-spacing:-.02em; }
+.wk__y{ margin-left:auto; font-family:var(--f-mono); font-size:12px; color:var(--ink-3); }
+.wk__d{ font-size:13.5px; color:var(--ink-2); line-height:1.7; margin-top:8px; padding-left:34px; }
+
+/* 关于 */
+.about{ display:grid; grid-template-columns:320px 1fr; gap:56px; align-items:start; }
+.about__ph{ aspect-ratio:4/5; border-radius:12px; background:linear-gradient(160deg,#d4d4d8,#a1a1aa 60%,#71717a); position:relative; overflow:hidden; }
+.about__ph::after{ content:''; position:absolute; inset:0; background:radial-gradient(circle at 62% 32%,rgba(255,255,255,.4),transparent 55%); }
+.about__ph span{ position:absolute; left:18px; bottom:16px; z-index:2; font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; color:rgba(255,255,255,.85); }
+.about__bd p{ font-size:16.5px; line-height:1.85; color:#27272a; margin-bottom:20px; }
+.about__bd p:last-of-type{ margin-bottom:0; }
+.skills{ display:flex; flex-wrap:wrap; gap:8px; margin-top:30px; }
+.skills span{ font-family:var(--f-mono); font-size:11.5px; padding:5px 11px; border:1px solid var(--line); border-radius:6px; color:var(--ink-2); }
+
+/* 时间线 */
+.tl{ display:flex; flex-direction:column; }
+.ti{ display:grid; grid-template-columns:132px 1fr; gap:32px; padding:24px 0; border-bottom:1px solid var(--line); }
+.ti:first-child{ padding-top:0; }
+.ti__y{ font-family:var(--f-mono); font-size:12.5px; color:var(--ink-3); padding-top:3px; }
+.ti__t{ font-size:17px; font-weight:730; letter-spacing:-.018em; margin-bottom:5px; }
+.ti__o{ font-size:13.5px; color:var(--ink-2); }
+.ti__x{ font-size:13.5px; color:var(--ink-2); line-height:1.75; margin-top:9px; }
+.ti__tags{ display:flex; gap:7px; margin-top:11px; flex-wrap:wrap; }
+.ti__tags span{ font-family:var(--f-mono); font-size:10.5px; letter-spacing:.06em; padding:3px 8px; border-radius:4px; background:#f4f4f5; color:var(--ink-2); }
+
+/* 联系 */
+.contact{ text-align:center; padding:96px 0; border-top:1px solid var(--line); }
+.contact h2{ font-size:clamp(28px,4.4vw,52px); font-weight:850; letter-spacing:-.04em; line-height:1.1; margin-bottom:22px; }
+.contact p{ color:var(--ink-2); font-size:16px; max-width:520px; margin:0 auto 34px; line-height:1.75; }
+.cbtns{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.cb{ display:inline-flex; align-items:center; gap:9px; height:50px; padding:0 28px; border-radius:999px; font-size:14.5px; font-weight:650; transition:.22s; }
+.cb--dark{ background:var(--ink); color:#fff; }
+.cb--dark:hover{ background:#27272a; transform:translateY(-2px); }
+.cb--line{ border:1px solid var(--line); color:var(--ink); }
+.cb--line:hover{ border-color:var(--ink); }
+
+/* 页脚 */
+.ft{ border-top:1px solid var(--line); padding:30px 0; }
+.ft__in{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; font-size:12.5px; color:var(--ink-3); }
+.ft__in .spacer{ flex:1 }
+.ft__in a:hover{ color:var(--ink); }
+
+@media(max-width:900px){
+  .works{ grid-template-columns:1fr; }
+  .about{ grid-template-columns:1fr; gap:32px; }
+  .about__ph{ aspect-ratio:16/10; max-width:340px; }
+  .hd__nav{ gap:18px; }
+}
+@media(max-width:620px){
+  .wrap{ width:calc(100% - 36px); }
+  .hero{ padding:64px 0 48px; }
+  .sec{ padding:58px 0; }
+  .hero__meta{ gap:26px; }
+  .ti{ grid-template-columns:1fr; gap:8px; }
+  .sh{ flex-wrap:wrap; } .sh__d{ margin-left:0; width:100%; }
+}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="wrap hd__in">
+    <div class="mark">林清野<span>产品设计师</span></div>
+    <nav class="hd__nav">
+      <a href="#works">作品</a>
+      <a href="#about">关于</a>
+      <a href="#exp">经历</a>
+      <a href="#contact">联系</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero wrap">
+  <span class="avail"><i></i>2026 年 10 月起接受新项目合作</span>
+  <h1>把复杂的业务<br><em>翻译成</em>好用的界面</h1>
+  <p class="hero__lead">
+    我是林清野，一名产品设计师。过去 8 年，我一直在做同一件事——
+    把企业里那些「只有老员工才看得懂」的系统，重新设计成新人也能上手的东西。
+  </p>
+  <div class="hero__meta">
+    <div class="mt"><small>Focus</small><b>B 端产品设计</b></div>
+    <div class="mt"><small>Experience</small><b>8 年</b></div>
+    <div class="mt"><small>Based in</small><b>杭州</b></div>
+    <div class="mt"><small>Status</small><b>可接新项目</b></div>
+  </div>
+</section>
+
+<!-- 作品 -->
+<section class="sec" id="works">
+  <div class="wrap">
+    <div class="sh">
+      <span class="sh__no">01 /</span>
+      <h2 class="sh__t">精选作品</h2>
+      <span class="sh__d">6 个项目，按时间倒序</span>
+    </div>
+
+    <div class="works">
+      <a class="wk" href="#">
+        <div class="wk__c"><div style="background:linear-gradient(150deg,#4f46e5,#312e81)"></div><span class="wk__tag">SaaS · 主设计</span></div>
+        <div class="wk__in"><span class="wk__n">06</span><span class="wk__t">云枢研发协作平台</span><span class="wk__y">2026</span></div>
+        <p class="wk__d">重构了 4 年历史的控制台，把 60 多个散落功能收进 6 个一级模块，新用户首次完成核心任务的时间从 23 分钟降到 6 分钟。</p>
+      </a>
+
+      <a class="wk" href="#">
+        <div class="wk__c"><div style="background:linear-gradient(150deg,#0d9488,#134e4a)"></div><span class="wk__tag">金融 · 设计系统</span></div>
+        <div class="wk__in"><span class="wk__n">05</span><span class="wk__t">银行企业网银改版</span><span class="wk__y">2025</span></div>
+        <p class="wk__d">牵头搭建覆盖 180+ 组件的金融级设计系统，统一了 7 条业务线的视觉与交互规范。</p>
+      </a>
+
+      <a class="wk" href="#">
+        <div class="wk__c"><div style="background:linear-gradient(150deg,#ea580c,#7c2d12)"></div><span class="wk__tag">工业 · 数据可视化</span></div>
+        <div class="wk__in"><span class="wk__n">04</span><span class="wk__t">智慧工厂生产看板</span><span class="wk__y">2024</span></div>
+        <p class="wk__d">在车间大屏上重新组织产能、良率、设备状态三类信息，让班组长抬头 3 秒就能判断今天要不要停线。</p>
+      </a>
+
+      <a class="wk" href="#">
+        <div class="wk__c"><div style="background:linear-gradient(150deg,#db2777,#831843)"></div><span class="wk__tag">电商 · 移动端</span></div>
+        <div class="wk__in"><span class="wk__n">03</span><span class="wk__t">拾光集购物车重构</span><span class="wk__y">2023</span></div>
+        <p class="wk__d">把结算流程从 5 步压到 2 步，下单转化率提升 18%，相关方案被写进公司设计规范。</p>
+      </a>
+
+      <a class="wk" href="#">
+        <div class="wk__c"><div style="background:linear-gradient(150deg,#0891b2,#164e63)"></div><span class="wk__tag">医疗 · 服务设计</span></div>
+        <div class="wk__in"><span class="wk__n">02</span><span class="wk__t">医院预约挂号系统</span><span class="wk__y">2022</span></div>
+        <p class="wk__d">面向中老年用户的挂号流程重做，字号、对比度、路径长度全部按无障碍标准重设，线上挂号占比从 31% 升到 67%。</p>
+      </a>
+
+      <a class="wk" href="#">
+        <div class="wk__c"><div style="background:linear-gradient(150deg,#65a30d,#365314)"></div><span class="wk__tag">公益 · 品牌</span></div>
+        <div class="wk__in"><span class="wk__n">01</span><span class="wk__t">乡村助学项目官网</span><span class="wk__y">2021</span></div>
+        <p class="wk__d">零预算公益项目，一个人做完品牌、界面与前端。上线首月募集助学款 42 万元。</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 关于 -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="sh">
+      <span class="sh__no">02 /</span>
+      <h2 class="sh__t">关于我</h2>
+    </div>
+    <div class="about">
+      <div class="about__ph"><span>— 2026 · 杭州 —</span></div>
+      <div class="about__bd">
+        <p>我不是科班设计出身。大学学的是信息管理，毕业后在一家制造企业做了两年 ERP 实施。那两年我天天泡在车间，看工人怎么用系统，听他们骂系统——也是那时候我意识到，<strong>大部分难用的软件，问题不在界面，而在没人认真问过用户到底要干什么</strong>。</p>
+        <p>2018 年我转行做设计，一直做到今天。我的习惯是先画业务流程图，再画界面；先跟一线员工聊两小时，再打开设计工具。我更愿意被人叫作「懂业务的界面设计师」，而不是「会画图的」。</p>
+        <p>工作之外我写博客、拍照、偶尔做点开源的小工具。如果你手上的系统正被人抱怨难用，欢迎找我聊聊。</p>
+        <div class="skills">
+          <span>产品设计</span><span>交互设计</span><span>设计系统</span><span>用户研究</span>
+          <span>信息架构</span><span>数据可视化</span><span>HTML / CSS</span><span>Figma</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 经历 -->
+<section class="sec" id="exp">
+  <div class="wrap">
+    <div class="sh">
+      <span class="sh__no">03 /</span>
+      <h2 class="sh__t">经历</h2>
+      <span class="sh__d">2016 — 至今</span>
+    </div>
+    <div class="tl">
+      <div class="ti">
+        <div class="ti__y">2023 — 至今</div>
+        <div>
+          <div class="ti__t">高级产品设计师 · 云枢科技</div>
+          <div class="ti__o">负责研发协作平台的整体体验，带 3 人设计小组</div>
+          <p class="ti__x">主导控制台 4.0 改版与设计系统建设，推动设计与前端的组件库对齐，需求返工率下降约 40%。</p>
+          <div class="ti__tags"><span>设计系统</span><span>团队管理</span><span>B 端</span></div>
+        </div>
+      </div>
+      <div class="ti">
+        <div class="ti__y">2020 — 2023</div>
+        <div>
+          <div class="ti__t">产品设计师 · 汇通金融科技</div>
+          <div class="ti__o">金融核心系统与移动端产品设计</div>
+          <p class="ti__x">完成企业网银改版、移动端 App 重构等项目，沉淀金融级设计规范 180+ 组件。</p>
+          <div class="ti__tags"><span>金融</span><span>移动端</span><span>规范建设</span></div>
+        </div>
+      </div>
+      <div class="ti">
+        <div class="ti__y">2018 — 2020</div>
+        <div>
+          <div class="ti__t">UI 设计师 · 麦禾数字</div>
+          <div class="ti__o">承接企业官网、商城、后台系统等外包项目</div>
+          <p class="ti__x">两年做了 30 多个项目，从官网到后台都有，练出了快速理解陌生行业的能力。</p>
+          <div class="ti__tags"><span>官网</span><span>电商</span><span>后台</span></div>
+        </div>
+      </div>
+      <div class="ti">
+        <div class="ti__y">2016 — 2018</div>
+        <div>
+          <div class="ti__t">ERP 实施顾问 · 某制造企业</div>
+          <div class="ti__o">制造业信息系统实施与培训</div>
+          <p class="ti__x">跑过 20 多个车间，写过 300 多页操作手册。这段经历是我做设计的起点。</p>
+          <div class="ti__tags"><span>制造业</span><span>实施</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 联系 -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>有项目想聊聊？</h2>
+    <p>无论是产品改版、设计系统搭建，还是只想找人看看界面哪里不对劲，都可以直接找我。</p>
+    <div class="cbtns">
+      <a class="cb cb--dark" href="mailto:hi@linqingye.example">✉ hi@linqingye.example</a>
+      <a class="cb cb--line" href="#">下载简历 PDF</a>
+    </div>
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap ft__in">
+    <span>© 2026 林清野 · 本页面为演示模板</span>
+    <span class="spacer"></span>
+    <a href="#">博客</a><a href="#">GitHub</a><a href="#">即刻</a><a href="#">回到顶部 ↑</a>
+  </div>
+</footer>
+
+</body>
+</html>
