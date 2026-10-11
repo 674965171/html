@@ -91,6 +91,27 @@ npx serve .
 
 ---
 
+## 部署（GitHub Pages）
+
+仓库自带 `.github/workflows/deploy-pages.yml`，推送到 `main` 即自动发布到
+<https://674965171.github.io/html/>。
+
+**首次启用前有一个前置条件**：GitHub Pages 在 **免费账号下只支持公开仓库**。
+如果仓库是私有的，工作流会因权限不足失败。处理方式二选一：
+
+- **改公开**（免费）：`Settings → General → 拉到最底 Danger Zone → Change repository visibility → Public`。
+  改完在 `Actions` 页对失败的运行点一次 **Re-run all jobs** 即可。
+- **保持私有**：需升级 GitHub Pro。注意即使升级，**发布出来的站点本身仍是公开的**——
+  私有只保护源码，不保护页面。
+
+工作流里的 `configure-pages` 带 `enablement: true`，会自动帮你打开 Pages，
+不需要再手动去 Settings → Pages 选发布源。
+
+> 备选方案：不用工作流，直接在 `Settings → Pages → Source: Deploy from a branch → main / (root)`。
+> 分支方式同样支持每次 push 自动重建。
+
+---
+
 ## 说明
 
 - 所有页面中的**公司名、产品名、价格、电话、地址、资质**均为虚构，仅用于演示版式，不构成任何商业信息。
